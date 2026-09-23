@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Ajieh Ikechukwu Praise — Digital Growth, AI and Marketing Automation specialist." />
+  <meta name="theme-color" content="#0a0a0a" />
+  <title>Praizzemann Digitals — Digital Growth × AI</title>
+  <style>
+:root{
+  --bg:#070707; --panel:#101010; --text:#f5f3ed; --muted:#aaa69e;
+  --line:#292929; --accent:#b8ff24; --max:1180px; --radius:22px;
+}
+*,
+*::before,
+*::after{box-sizing:border-box}
+
+html{
+  width:100%;
+  max-width:100%;
+  overflow-x:hidden;
+  scroll-behavior:smooth;
+}
+body{
+  width:100%;
+  max-width:100%;
+  min-width:0;
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  line-height:1.5;
+  overflow-x:hidden;
+  -webkit-text-size-adjust:100%;
+}
+body.menu-open{overflow:hidden}
+a{color:inherit;text-decoration:none}
+img,svg,video{display:block;max-width:100%;height:auto}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+
+.wrap{
+  width:100%;
+  max-width:var(--max);
+  margin:0 auto;
+  padding-left:20px;
+  padding-right:20px;
+}
+
+section{width:100%;padding:76px 0}
+.hero{
+  width:100%;
+  min-height:100svh;
+  padding:118px 0 48px;
+  display:flex;
+  align-items:center;
+  overflow:hidden;
+  position:relative;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  width:100vw;
+  height:100vw;
+  max-width:600px;
+  max-height:600px;
+  right:-55vw;
+  top:18%;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(184,255,36,.11),transparent 67%);
+  pointer-events:none;
+}
+.hero .wrap{position:relative;z-index:1}
+
+.nav{
+  position:fixed;
+  z-index:100;
+  top:10px;
+  left:10px;
+  right:10px;
+  width:auto;
+  max-width:1100px;
+  margin:auto;
+  min-width:0;
+  padding:8px 9px;
+  border:1px solid #2b2b2b;
+  border-radius:999px;
+  background:rgba(10,10,10,.9);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.brand{
+  min-width:0;
+  max-width:calc(100% - 52px);
+  padding:8px 10px;
+  font-size:clamp(10px,2.7vw,14px);
+  font-weight:900;
+  line-height:1;
+  letter-spacing:-.055em;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.navlinks{
+  display:none;
+  position:fixed;
+  z-index:99;
+  top:72px;
+  left:10px;
+  right:10px;
+  width:auto;
+  padding:10px;
+  border:1px solid #2b2b2b;
+  border-radius:20px;
+  background:rgba(10,10,10,.98);
+  box-shadow:0 24px 80px rgba(0,0,0,.6);
+  flex-direction:column;
+}
+.navlinks.open{display:flex}
+.navlinks a{padding:14px 15px;border-radius:12px;font-size:14px;color:#ddd}
+.navlinks a:hover{background:#1d1d1d}
+.navcta{background:var(--accent);color:#080808!important;font-weight:800}
+.menu{
+  width:42px;height:42px;flex:0 0 42px;
+  display:grid;place-items:center;
+  border:0;background:transparent;color:#fff;
+  position:relative;z-index:110;
+}
+.menu i,.menu i::before,.menu i::after{
+  content:"";display:block;width:23px;height:2px;border-radius:2px;background:#fff;
+  position:absolute;transition:.2s;
+}
+.menu i::before{transform:translateY(-7px)}
+.menu i::after{transform:translateY(7px)}
+.menu.active i{background:transparent}
+.menu.active i::before{transform:rotate(45deg)}
+.menu.active i::after{transform:rotate(-45deg)}
+
+.eyebrow{
+  display:flex;align-items:center;gap:9px;
+  width:100%;
+  max-width:100%;
+  color:var(--accent);
+  font-size:clamp(10px,2.6vw,12px);
+  font-weight:800;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  overflow-wrap:anywhere;
+}
+.dot{width:8px;height:8px;flex:0 0 8px;background:var(--accent);border-radius:50%;box-shadow:0 0 18px var(--accent)}
+
+h1{
+  width:100%;
+  max-width:100%;
+  margin:20px 0;
+  font-size:clamp(48px,14.2vw,128px);
+  line-height:.9;
+  letter-spacing:-.075em;
+  font-weight:900;
+  overflow-wrap:break-word;
+  word-break:normal;
+}
+h1 span{color:var(--accent)}
+.lead{
+  width:100%;
+  max-width:720px;
+  margin:0;
+  color:#c8c5be;
+  font-size:clamp(16px,4.3vw,23px);
+  line-height:1.5;
+}
+.actions{
+  width:100%;
+  max-width:720px;
+  margin-top:28px;
+  display:grid;
+  grid-template-columns:1fr;
+  gap:10px;
+}
+.btn{
+  width:100%;
+  min-height:54px;
+  padding:14px 18px;
+  border:1px solid #383838;
+  border-radius:999px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  font-size:14px;
+  font-weight:800;
+}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#080808}
+
+.ticker{
+  width:100%;
+  max-width:100%;
+  margin-top:55px;
+  padding:15px 0;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  overflow:hidden;
+}
+.ticker-track{
+  width:max-content;
+  display:flex;
+  white-space:nowrap;
+  animation:marquee 22s linear infinite;
+}
+.ticker span{margin-right:34px;color:#858178;font-size:11px;letter-spacing:.16em;text-transform:uppercase}
+@keyframes marquee{to{transform:translateX(-50%)}}
+
+.section-head{
+  width:100%;
+  display:block;
+  margin-bottom:28px;
+}
+.kicker{font-size:11px;color:var(--accent);font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+h2{
+  width:100%;
+  max-width:800px;
+  margin:8px 0 0;
+  font-size:clamp(38px,11.5vw,76px);
+  line-height:.95;
+  letter-spacing:-.06em;
+}
+.section-note{width:100%;max-width:600px;margin:16px 0 0;color:var(--muted);font-size:15px}
+
+.metrics{
+  width:100%;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  overflow:hidden;
+}
+.metric{
+  min-width:0;
+  padding:20px 17px;
+  min-height:126px;
+  border-right:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+.metric:nth-child(2n){border-right:0}
+.metric:nth-last-child(-n+1){border-bottom:0}
+.metric strong{font-size:clamp(28px,8vw,42px);line-height:1;letter-spacing:-.06em}
+.metric p{margin:7px 0 0;color:var(--muted);font-size:11px;line-height:1.35}
+
+.grid{
+  width:100%;
+  display:grid;
+  grid-template-columns:1fr;
+  gap:14px;
+}
+.card{
+  width:100%;
+  min-width:0;
+  padding:23px;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  background:var(--panel);
+}
+.card h3{font-size:23px;line-height:1.05;letter-spacing:-.04em;margin:12px 0}
+.card p{color:var(--muted)}
+.tag{display:inline-block;margin:3px;padding:6px 9px;border:1px solid #343434;border-radius:999px;color:#bbb7ae;font-size:10px}
+
+.case{
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  margin-top:14px;
+}
+.case-copy{
+  width:100%;
+  min-width:0;
+  padding:24px;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  background:var(--panel);
+}
+.case-copy .number{font-size:11px;color:var(--accent);font-weight:800;letter-spacing:.1em}
+.case-copy h3{margin:18px 0 13px;font-size:clamp(30px,9vw,54px);line-height:.98;letter-spacing:-.055em}
+.case-copy p{margin:0;color:var(--muted);font-size:15px}
+.case-image{
+  width:100%;
+  min-width:0;
+  min-height:0;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  overflow:hidden;
+  background:#111;
+}
+.case-image img{display:block;width:100%;
+  width:100%;
+  height:auto;
+  max-height:600px;
+  object-fit:cover;
+}
+.result-row{
+  width:100%;
+  display:grid;
+  grid-template-columns:1fr;
+  gap:8px;
+  margin-top:22px;
+}
+.result{
+  min-width:0;
+  padding-top:10px;
+  border-top:1px solid #333;
+  display:grid;
+  grid-template-columns:90px 1fr;
+  align-items:center;
+  gap:8px;
+}
+.result strong{font-size:24px;line-height:1}
+.result span{color:#888;font-size:10px}
+
+.timeline{width:100%;position:relative;margin-top:20px}
+.timeline::before{content:"";position:absolute;left:7px;top:0;bottom:0;width:1px;background:#303030}
+.job{position:relative;padding-left:30px;margin-bottom:30px}
+.job::before{content:"";position:absolute;left:3px;top:7px;width:9px;height:9px;border-radius:50%;background:var(--accent)}
+.job .date{font-size:10px;color:var(--accent);font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.job h3{font-size:20px;margin:6px 0}
+.job p{margin:0;color:var(--muted);font-size:14px}
+
+.stack{display:flex;flex-wrap:wrap;gap:6px}
+.testimonial{min-height:220px;display:flex;flex-direction:column;justify-content:space-between}
+.quote{font-size:22px;line-height:1.25;letter-spacing:-.03em}
+.placeholder{border:1px dashed #454545;background:#0c0c0c}
+.placeholder .quote{color:#777}
+
+.cta{
+  width:100%;
+  padding:32px 22px;
+  border-radius:24px;
+  background:var(--accent);
+  color:#090909;
+}
+.cta h2{max-width:850px}
+.cta p{max-width:650px;color:#252a19;font-size:16px}
+.cta .btn{border-color:#0b0b0b;color:#0b0b0b}
+
+footer{
+  width:100%;
+  padding:34px 0 50px;
+  border-top:1px solid var(--line);
+  color:#777;
+  font-size:12px;
+}
+.footer-row{display:grid;gap:8px}
+
+.reveal{opacity:1;transform:none}
+@media(prefers-reduced-motion:no-preference){
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.show{opacity:1;transform:none}
+}
+
+@media(min-width:600px){
+  .wrap{padding-left:28px;padding-right:28px}
+  .actions{grid-template-columns:auto auto;justify-content:start}
+  .btn{width:auto;min-width:190px}
+  .grid{grid-template-columns:1fr 1fr}
+  .result-row{grid-template-columns:repeat(3,1fr)}
+  .result{display:block}
+  .result span{display:block;margin-top:5px}
+}
+
+@media(min-width:900px){
+  .wrap{padding-left:32px;padding-right:32px}
+  section{padding:110px 0}
+  .navlinks{display:flex;position:static;width:auto;padding:0;border:0;background:transparent;box-shadow:none;flex-direction:row}
+  .menu{display:none}
+  .section-head{display:flex;justify-content:space-between;align-items:end;gap:30px}
+  .section-note{margin:0;max-width:380px}
+  .metrics{grid-template-columns:repeat(5,1fr)}
+  .metric{border-right:1px solid var(--line);border-bottom:0}
+  .metric:nth-child(2n){border-right:1px solid var(--line)}
+  .metric:last-child{border-right:0}
+  .grid{grid-template-columns:repeat(3,1fr)}
+  .case{display:grid;grid-template-columns:1.05fr .95fr;gap:18px}
+  .case-image{min-height:350px}
+  .case-image img{display:block;width:100%;height:100%;object-fit:cover}
+  .cta{padding:58px}
+  .footer-row{display:flex;justify-content:space-between;gap:20px}
+}
+
+@media(max-width:360px){
+  .wrap{padding-left:14px;padding-right:14px}
+  .nav{left:7px;right:7px}
+  .brand{font-size:10px}
+  h1{font-size:clamp(42px,14vw,55px)}
+  .eyebrow{font-size:9px}
+  .metrics{grid-template-columns:1fr}
+  .metric,.metric:nth-child(2n){border-right:0}
+  .metric:last-child{border-bottom:0}
+}
+</style>
+</head>
+<body>
+  <nav class="nav">
+    <a class="brand" href="#top">PRAIZZEMANN DIGITALS<span style="color:var(--accent)">.</span></a>
+    <div class="navlinks">
+      <a href="#proof">Proof</a><a href="#services">Services</a><a href="#work">Work</a><a href="#about">About</a><a class="navcta" href="#contact">Let's Talk</a>
+    </div>
+    <button class="menu" aria-label="Open navigation" aria-expanded="false"><i></i></button>
+  </nav>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap reveal">
+        <div class="eyebrow"><span class="dot"></span> Digital Growth × AI × Automation</div>
+        <h1>I TURN <span>ATTENTION</span> INTO GROWTH.</h1>
+        <p class="lead">I'm Ajieh Ikechukwu Praise — a digital growth and AI specialist helping brands become more visible, connect with the right audience, and build smarter marketing systems.</p>
+        <div class="actions">
+          <a class="btn primary" href="#work">Explore the work ↓</a>
+          <a class="btn" href="#contact">Start a conversation</a>
+        </div>
+        <div class="ticker"><div class="ticker-track"><span>Strategy</span><span>SEO</span><span>Social Growth</span><span>Paid Media</span><span>AI</span><span>Automation</span><span>Analytics</span><span>Content</span><span>Strategy</span><span>SEO</span><span>Social Growth</span><span>Paid Media</span><span>AI</span><span>Automation</span><span>Analytics</span><span>Content</span></div></div>
+      </div>
+    </section>
+
+    <section id="proof">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div><div class="kicker">01 / Proof</div><h2>Don't just take my word for it.</h2></div>
+          <p class="section-note">Selected performance evidence from my CV and the analytics screenshots provided for this portfolio. Each metric should be tied to its project/context before launch.</p>
+        </div>
+        <div class="metrics reveal">
+          <div class="metric"><strong>40%</strong><p>Client engagement increase</p></div>
+          <div class="metric"><strong>25%</strong><p>Conversion improvement</p></div>
+          <div class="metric"><strong>56.9K</strong><p>Paid reach shown in campaign evidence</p></div>
+          <div class="metric"><strong>41</strong><p>Messaging conversations shown in Ads Manager</p></div>
+          <div class="metric"><strong>#5</strong><p>SEO keyword position shown in ranking evidence</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="services">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div><div class="kicker">02 / What I do</div><h2>Marketing that connects creativity to business.</h2></div>
+          <p class="section-note">A modern mix of digital marketing, search visibility, paid advertising, email and performance thinking.</p>
+        </div>
+        <div class="grid">
+          <article class="card reveal"><div class="kicker">01</div><h3>Digital Growth</h3><p>Digital marketing strategy, audience growth, customer acquisition, lead generation and performance analysis.</p><span class="tag">Strategy</span><span class="tag">Growth</span><span class="tag">Analytics</span></article>
+          <article class="card reveal"><div class="kicker">02</div><h3>SEO & Visibility</h3><p>Search-focused content and optimization designed to help businesses become easier to discover.</p><span class="tag">SEO</span><span class="tag">SEM</span><span class="tag">Content</span></article>
+          <article class="card reveal"><div class="kicker">03</div><h3>Paid Ads</h3><p>Paid advertising campaigns built to reach the right audience, generate qualified leads and drive measurable business results.</p><span class="tag">Google Ads</span><span class="tag">Meta Ads</span><span class="tag">TikTok Ads</span></article>
+          <article class="card reveal"><div class="kicker">04</div><h3>Email Marketing</h3><p>Strategic email campaigns that nurture audiences, strengthen customer relationships and turn attention into action.</p><span class="tag">Email Strategy</span><span class="tag">Campaigns</span><span class="tag">Automation</span></article>
+          <article class="card reveal"><div class="kicker">05</div><h3>Marketing Automation</h3><p>Smarter workflows connecting lead capture, CRM systems and repetitive marketing operations.</p><span class="tag">Zapier</span><span class="tag">HubSpot</span><span class="tag">CRM</span></article>
+          <article class="card reveal"><div class="kicker">06</div><h3>Content & Social Growth</h3><p>Creative content systems designed to increase visibility, audience engagement and brand recognition.</p><span class="tag">Content</span><span class="tag">Social</span><span class="tag">Campaigns</span></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="work">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div><div class="kicker">03 / Selected work</div><h2>Real evidence. Real systems. Real stories.</h2></div>
+          <p class="section-note">A selection of campaign, social and search-performance evidence from my work.</p>
+        </div>
+
+        <article class="case reveal">
+          <div class="case-copy">
+            <div><div class="number">CASE STUDY / SEO</div><h3>From not ranking to page-one visibility.</h3><p>Keyword-performance evidence shows targeted search terms moving from “Not Ranking” to positions including #5, #7 and #8. The screenshots document the before-and-after movement.</p></div>
+            <div class="result-row"><div class="result"><strong>#5</strong><span>Keyword position shown</span></div><div class="result"><strong>#7</strong><span>Keyword position shown</span></div><div class="result"><strong>#8</strong><span>Keyword position shown</span></div></div>
+          </div>
+          <div class="case-image"><img src="social-insights-1.jpg" alt="SEO keyword ranking evidence screenshot" loading="lazy"></div>
+        </article>
+
+        <article class="case reveal">
+          <div class="case-copy">
+            <div><div class="number">CASE STUDY / SOCIAL GROWTH</div><h3>Growing attention through content.</h3><p>Social analytics show 77,275 views in a 28-day period, up 25% from the previous period, alongside 4,800 interactions and 12,670 followers.</p></div>
+            <div class="result-row"><div class="result"><strong>77K+</strong><span>Views shown</span></div><div class="result"><strong>4.8K</strong><span>Interactions shown</span></div><div class="result"><strong>12.6K</strong><span>Followers shown</span></div></div>
+          </div>
+          <div class="case-image"><img src="social-insights-2.jpg" alt="Social media analytics showing views, interactions and followers" loading="lazy"></div>
+        </article>
+
+        <article class="case reveal">
+          <div class="case-copy">
+            <div><div class="number">CASE STUDY / PAID MEDIA</div><h3>Turning paid reach into conversations.</h3><p>Meta Ads Manager evidence shows a campaign reaching 3,364 people and generating 41 messaging conversations from 4,363 impressions. The report also shows ₦11,346.98 total spend.</p></div>
+            <div class="result-row"><div class="result"><strong>3,364</strong><span>Reach</span></div><div class="result"><strong>41</strong><span>Messaging conversations</span></div><div class="result"><strong>4,363</strong><span>Impressions</span></div></div>
+          </div>
+          <div class="case-image"><img src="meta-campaign-report.jpg" alt="Meta Ads Manager campaign reporting screenshot" loading="lazy"></div>
+        </article>
+
+        <article class="case reveal">
+          <div class="case-copy">
+            <div><div class="number">CASE STUDY / CAMPAIGN BREAKDOWN</div><h3>Reading the numbers behind the campaign.</h3><p>The campaign breakdown provides a closer view of reach, impressions and messaging-conversation results across audience segments.</p></div>
+            <div class="result-row"><div class="result"><strong>41</strong><span>Conversations shown</span></div><div class="result"><strong>4,363</strong><span>Impressions shown</span></div><div class="result"><strong>3,364</strong><span>Reach shown</span></div></div>
+          </div>
+          <div class="case-image"><img src="meta-campaign-breakdown.png" alt="Meta Ads campaign breakdown screenshot" loading="lazy"></div>
+        </article>
+
+        <article class="case reveal">
+          <div class="case-copy">
+            <div><div class="number">CASE STUDY / AWARENESS</div><h3>Building reach with controlled spend.</h3><p>A campaign snapshot shows 56.9K reach over seven days, with ₦4,597.30 spent and a displayed cost of ₦80.75 per 1,000 people reached.</p></div>
+            <div class="result-row"><div class="result"><strong>56.9K</strong><span>Reach</span></div><div class="result"><strong>₦4.6K</strong><span>Spend shown</span></div><div class="result"><strong>₦80.75</strong><span>Cost / 1K reached</span></div></div>
+          </div>
+          <div class="case-image"><img src="meta-campaign-overview.png" alt="Meta campaign overview screenshot" loading="lazy"></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div><div class="kicker">04 / Experience</div><h2>Marketing experience, with an AI advantage.</h2></div>
+          <p class="section-note">My career has moved from social media and email marketing into digital growth, media management, AI operations and automation.</p>
+        </div>
+        <div class="timeline" id="experienceTimeline">
+          <div class="job reveal"><div class="date">Jan 2023 — Present</div><h3>Media Manager · Sam and Cham Digitals</h3><p>Led digital marketing and media campaigns; CV records 40% client engagement growth and 25% conversion improvement, plus AI creative workflows that reduced production costs by 30% and increased content output by 50%.</p></div>
+          <div class="job reveal"><div class="date">May 2021 — Dec 2022</div><h3>Digital Marketing Head · Faida Tech Hub</h3><p>Built holistic digital marketing strategies; CV records 30% qualified-lead growth, 20% lower customer acquisition cost and a 15% improvement in marketing ROI.</p></div>
+          <div class="job reveal"><div class="date">Sep 2019 — Apr 2021</div><h3>Email Marketing Specialist · Ibridsolutions</h3><p>Developed targeted email campaigns, segmentation and CRM workflows; CV records 35% higher open rates, 20% higher click-through rates and a 10% increase in customer retention.</p></div>
+          <div class="job reveal"><div class="date">Mar 2018 — Aug 2019</div><h3>Social Media Specialist · Accessgate</h3><p>Built social media strategies and content that increased audience engagement by 50% according to the CV.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div><div class="kicker">05 / AI & tools</div><h2>The modern marketing stack.</h2></div>
+          <p class="section-note">Tools listed in my CV. More can be added as the portfolio evolves.</p>
+        </div>
+        <div class="card reveal">
+          <div class="stack">
+            <span class="tag">OpenAI / ChatGPT / API</span><span class="tag">Claude</span><span class="tag">Gemini</span><span class="tag">Midjourney</span><span class="tag">Runway</span><span class="tag">Pika</span><span class="tag">Sora</span><span class="tag">HubSpot</span><span class="tag">Salesforce</span><span class="tag">Mailchimp</span><span class="tag">Zapier</span><span class="tag">SEMrush</span><span class="tag">Ahrefs</span><span class="tag">Meta Ads Manager</span><span class="tag">Google Ads</span><span class="tag">Google Analytics 4</span><span class="tag">Hootsuite</span><span class="tag">Notion</span><span class="tag">Jira</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div><div class="kicker">06 / Testimonials</div><h2>Client-style proof, ready for the real words.</h2></div>
+          <p class="section-note">These are illustrative testimonial drafts, not claims from real clients. Replace them with your verified testimonials before publishing.</p>
+        </div>
+        <div class="grid" id="testimonialsGrid">
+          <article class="card testimonial reveal">
+            <div class="quote">“Praizzemann Digitals helped us stop posting randomly and start marketing with a clear strategy. The difference was seeing our content, audience and business goals finally work together.”</div>
+            <div><strong>ILLUSTRATIVE DRAFT</strong><p>Business Owner · Replace with verified client name, company and exact quote</p></div>
+          </article>
+          <article class="card testimonial reveal">
+            <div class="quote">“The biggest change was visibility. We went from struggling to get attention online to having a clearer message and a system for turning attention into conversations.”</div>
+            <div><strong>ILLUSTRATIVE DRAFT</strong><p>Founder / Brand Lead · Replace with verified client name, company and exact quote</p></div>
+          </article>
+          <article class="card testimonial reveal">
+            <div class="quote">“What stood out was the combination of creative thinking and numbers. Every campaign had a reason behind it, and we could actually see what was working.”</div>
+            <div><strong>ILLUSTRATIVE DRAFT</strong><p>Marketing Lead · Replace with verified client name, company and exact quote</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="wrap">
+        <div class="cta reveal">
+          <div class="kicker" style="color:#263019">07 / Let's work</div>
+          <h2>Ready to make your brand more visible — and more valuable?</h2>
+          <p>If you need a smarter digital growth strategy, stronger visibility, better content systems or AI-powered marketing workflows, let's talk.</p>
+          <div class="actions">
+            <a class="btn" href="tel:+2348102692209">Call me ↗</a>
+            <a class="btn" href="https://wa.me/2348102692209" target="_blank" rel="noopener noreferrer">WhatsApp ↗</a>
+            <a class="btn" href="https://linkedin.com/in/praizikechukwu" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+            <a class="btn" href="https://instagram.com/iam_Praizzemann" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
+            <a class="btn" href="mailto:Praizzemanndigitals@gmail.com">Email me ↗</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-row">
+      <span>© 2026 Ajieh Ikechukwu Praise</span>
+      <span>Digital Growth × AI × Automation</span>
+      <span class="footer-contact">
+        <a href="tel:+2348102692209">Call</a>
+        <a href="https://wa.me/2348102692209" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+        <a href="https://linkedin.com/in/praizikechukwu" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://instagram.com/iam_Praizzemann" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="mailto:Praizzemanndigitals@gmail.com">Email</a>
+      </span>
+    </div>
+  </footer>
+
+  <script>
+(() => {
+  const menu = document.querySelector('.menu');
+  const links = document.querySelector('.navlinks');
+
+  if (menu && links) {
+    menu.addEventListener('click', () => {
+      const isOpen = links.classList.toggle('open');
+      menu.classList.toggle('active', isOpen);
+      menu.setAttribute('aria-expanded', String(isOpen));
+      menu.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
+      document.body.classList.toggle('menu-open', isOpen);
+    });
+
+    links.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        links.classList.remove('open');
+        menu.classList.remove('active');
+        menu.setAttribute('aria-expanded', 'false');
+        menu.setAttribute('aria-label', 'Open navigation');
+        document.body.classList.remove('menu-open');
+      });
+    });
+  }
+
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {threshold: 0.08});
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  } else {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('show'));
+  }
+})();
+</script>
+
+<script>
+(function(){
+  const KEY='praizzemann_portfolio_content_v1';
+  const IMGKEY='praizzemann_portfolio_images_v1';
+  const getData=()=>{try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){return {}}};
+  const getImgs=()=>{try{return JSON.parse(localStorage.getItem(IMGKEY)||'{}')}catch(e){return {}}};
+  const d=getData(), imgs=getImgs();
+
+  function setText(sel, val){
+    if(val!==undefined && val!==null){
+      const el=document.querySelector(sel);
+      if(el) el.textContent=val;
+    }
+  }
+  function setHTML(sel, val){
+    if(val!==undefined && val!==null){
+      const el=document.querySelector(sel);
+      if(el) el.innerHTML=val;
+    }
+  }
+  function setHref(sel, val){
+    if(val){ const el=document.querySelector(sel); if(el) el.href=val; }
+  }
+
+  setText('.brand', d.brand);
+  setText('#proof h2', d.proofTitle);
+  setText('#proof .section-note', d.proofNote);
+  setText('#services h2', d.servicesTitle);
+  setText('#services .section-note', d.servicesNote);
+  setText('#work h2', d.workTitle);
+  setText('#work .section-note', d.workNote);
+  setText('#about h2', d.aboutTitle);
+  setText('#about .section-note', d.aboutNote);
+  setText('#contact h2', d.contactTitle);
+  setText('#contact p', d.contactNote);
+
+  if(d.heroKicker) setText('main .kicker', d.heroKicker);
+  if(d.heroTitle){
+    const h1=document.querySelector('main h1');
+    if(h1) h1.innerHTML=d.heroTitle;
+  }
+  setText('main .lede', d.heroBio);
+
+  if(d.email){
+    setHref('#contact .btn', 'mailto:'+d.email);
+    const cta=document.querySelector('#contact .btn');
+    if(cta) cta.textContent='Email me ↗';
+  }
+
+  // Contact links
+  const contactBtns=document.querySelectorAll('#contact .btn');
+  if(d.phone && contactBtns[0]) { contactBtns[0].href='tel:'+d.phone; contactBtns[0].textContent='Call me ↗'; }
+  if(d.phone && contactBtns[1]) {
+    const digits=d.phone.replace(/[^0-9]/g,'');
+    contactBtns[1].href='https://wa.me/'+digits; contactBtns[1].target='_blank'; contactBtns[1].rel='noopener noreferrer';
+    contactBtns[1].textContent='WhatsApp ↗';
+  }
+  if(d.linkedin && contactBtns[2]) { contactBtns[2].href=d.linkedin; contactBtns[2].target='_blank'; contactBtns[2].rel='noopener noreferrer'; }
+  if(d.instagram && contactBtns[3]) { contactBtns[3].href=d.instagram; contactBtns[3].target='_blank'; contactBtns[3].rel='noopener noreferrer'; }
+  if(d.email && contactBtns[4]) { contactBtns[4].href='mailto:'+d.email; contactBtns[4].textContent='Email me ↗'; }
+
+  // Services
+  if(Array.isArray(d.services)){
+    document.querySelectorAll('#services article.card').forEach((card,i)=>{
+      const s=d.services[i]; if(!s) return;
+      const h=card.querySelector('h3'), p=card.querySelector('p');
+      if(h) h.textContent=s.title||h.textContent;
+      if(p) p.textContent=s.description||p.textContent;
+      const tags=card.querySelectorAll('.tag');
+      (s.tags||[]).slice(0,tags.length).forEach((t,j)=>tags[j].textContent=t);
+    });
+  }
+
+  // Proof metrics
+  if(Array.isArray(d.metrics)){
+    document.querySelectorAll('#proof .metric').forEach((m,i)=>{
+      const x=d.metrics[i]; if(!x) return;
+      const strong=m.querySelector('strong'), p=m.querySelector('p');
+      if(strong) strong.textContent=x.value||strong.textContent;
+      if(p) p.textContent=x.label||p.textContent;
+    });
+  }
+
+  // Work
+  if(Array.isArray(d.work)){
+    document.querySelectorAll('#work article.case').forEach((card,i)=>{
+      const x=d.work[i]; if(!x) return;
+      const num=card.querySelector('.number'), h=card.querySelector('h3'), p=card.querySelector('.case-copy > div:first-child p');
+      if(num) num.textContent=x.label||num.textContent;
+      if(h) h.textContent=x.title||h.textContent;
+      if(p) p.textContent=x.description||p.textContent;
+      const results=card.querySelectorAll('.result');
+      (x.results||[]).slice(0,results.length).forEach((r,j)=>{
+        const a=results[j].querySelector('strong'), b=results[j].querySelector('span');
+        if(a) a.textContent=r.value||a.textContent;
+        if(b) b.textContent=r.label||b.textContent;
+      });
+      const im=card.querySelector('img');
+      if(im && imgs['work'+i]) im.src=imgs['work'+i];
+    });
+  }
+
+  // Experience / previous workplaces
+  if(Array.isArray(d.experience) && d.experience.length){
+    const timeline=document.querySelector('#experienceTimeline');
+    if(timeline){
+      timeline.innerHTML=d.experience.map(x=>`<div class="job reveal"><div class="date">${x.date||''}</div><h3>${x.title||''}</h3><p>${x.description||''}</p></div>`).join('');
+    }
+  }
+
+  // Testimonials
+  if(Array.isArray(d.testimonials)){
+    const grid=document.querySelector('#testimonialsGrid');
+    if(grid){
+      grid.innerHTML=d.testimonials.map(x=>`<article class="card testimonial reveal"><div class="quote">“${x.quote||''}”</div><div><strong>${(x.name||'').split(' · ')[0]||''}</strong><p>${(x.name||'').split(' · ').slice(1).join(' · ')||''}</p></div></article>`).join('');
+    }
+  }
+})();
+</script>
+
+</body>
+</html>
