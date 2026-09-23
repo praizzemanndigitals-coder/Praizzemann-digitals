@@ -6,11 +6,5 @@
   "assets": {
     "directory": ".",
     "binding": "ASSETS"
-  },
-  "kv_namespaces": [
-    {
-      "binding": "SITE_DATA",
-      "id": "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
-    }
-  ]
+  }
 }
