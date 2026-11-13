@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Praizzemann Digitals — Owner Editor</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;padding:20px;background:#080808;color:#f5f5f5;font-family:Arial,sans-serif}
+main{max-width:750px;margin:auto}
+h1{color:#b8ff24}
+.card{background:#151515;border:1px solid #333;border-radius:14px;padding:18px;margin:18px 0}
+label{display:block;margin:12px 0 6px;color:#ccc}
+input,textarea{width:100%;padding:12px;border-radius:8px;border:1px solid #555;background:#090909;color:white;font:inherit}
+textarea{min-height:110px}
+button{padding:12px 17px;border:0;border-radius:8px;background:#b8ff24;color:#080808;font-weight:bold;margin:8px 5px 5px 0}
+button.delete{background:#733333;color:white}
+.status{color:#b8ff24;white-space:pre-wrap}
+small{color:#aaa}
+</style>
+</head>
+<body>
+<main>
+<h1>PRAIZZEMANN DIGITALS</h1>
+<h2>Private Owner Editor</h2>
+<p>Edit and publish your genuine client testimonials.</p>
+
+<div class="card">
+<label>Private publishing token</label>
+<input id="token" type="password" placeholder="Enter your PUBLISH_TOKEN">
+<button id="load">Load published content</button>
+<p class="status" id="status">Enter your publishing token to begin.</p>
+</div>
+
+<div class="card">
+<h2>Testimonials</h2>
+<div id="items"></div>
+<button id="add">+ Add testimonial</button>
+<button id="save">Publish changes</button>
+<p class="status" id="result"></p>
+</div>
+</main>
+
+<script>
+let siteData = {};
+let siteImages = {};
+const items = document.getElementById('items');
+const statusBox = document.getElementById('status');
+const resultBox = document.getElementById('result');
+
+function makeField(label, value, placeholder, multiline) {
+  const wrap = document.createElement('div');
+  const title = document.createElement('label');
+  title.textContent = label;
+  const field = document.createElement(multiline ? 'textarea' : 'input');
+  field.value = value || '';
+  field.placeholder = placeholder || '';
+  wrap.append(title, field);
+  return {wrap, field};
+}
+
+function addTestimonial(item = {}) {
+  const card = document.createElement('div');
+  card.className = 'card';
+
+  const name = makeField('Client name · Company / role', item.name, 'Client name · Company', false);
+  const quote = makeField('Testimonial', item.quote, 'Enter the genuine client feedback', true);
+
+  const remove = document.createElement('button');
+  remove.className = 'delete';
+  remove.textContent = 'Delete testimonial';
+  remove.onclick = () => card.remove();
+
+  card.append(name.wrap, quote.wrap, remove);
+  card.dataset.testimonial = 'true';
+  items.append(card);
+}
+
+document.getElementById('load').onclick = async () => {
+  const token = document.getElementById('token').value.trim();
+  if (!token) {
+    statusBox.textContent = 'Please enter your publishing token.';
+    return;
+  }
+  statusBox.textContent = 'Loading...';
+  try {
+    const response = await fetch('/api/site');
+    if (!response.ok) throw new Error('Could not load website data.');
+    const result = await response.json();
+    siteData = result.data || {};
+    siteImages = result.images || {};
+    items.innerHTML = '';
+    (siteData.testimonials || []).forEach(addTestimonial);
+    statusBox.textContent = 'Published content loaded successfully.';
+  } catch (error) {
+    statusBox.textContent = error.message;
+  }
+};
+
+document.getElementById('add').onclick = () => addTestimonial();
+
+document.getElementById('save').onclick = async () => {
+  const token = document.getElementById('token').value.trim();
+  if (!token) {
+    resultBox.textContent = 'Enter your publishing token first.';
+    return;
+  }
+
+  const testimonials = [...items.querySelectorAll('[data-testimonial]')].map(card => {
+    const fields = card.querySelectorAll('input,textarea');
+    return {
+      name: fields[0].value.trim(),
+      quote: fields[1].value.trim()
+    };
+  }).filter(x => x.name && x.quote);
+
+  if (testimonials.length === 0) {
+    resultBox.textContent = 'Add at least one genuine testimonial before publishing.';
+    return;
+  }
+
+  siteData.testimonials = testimonials;
+  resultBox.textContent = 'Publishing...';
+
+  try {
+    const response = await fetch('/api/site', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      },
+      body: JSON.stringify({data: siteData, images: siteImages})
+    });
+
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.error || 'Publishing failed.');
+    resultBox.textContent = 'Published successfully! Refresh your public portfolio to check.';
+  } catch (error) {
+    resultBox.textContent = error.message;
+  }
+};
+</script>
+</body>
+</html>
