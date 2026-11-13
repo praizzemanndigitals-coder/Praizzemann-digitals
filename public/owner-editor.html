@@ -245,8 +245,65 @@ try{
 const response=await fetch(API,{cache:'no-store'});
 if(!response.ok) throw new Error('Could not load website content.');
 const result=await response.json();
-siteData=result.data||{};
-siteImages=result.images||{};
+
+const defaults = {
+  brand: "PRAIZZEMANN DIGITALS",
+  heroKicker: "DIGITAL GROWTH & AI SPECIALIST",
+  heroTitle: "I TURN ATTENTION INTO GROWTH.",
+  heroBio: "I'm Ajieh Ikechukwu Praise — a digital growth and AI specialist helping brands become more visible, connect with the right audience, and build smarter marketing systems.",
+
+  proofTitle: "Results That Speak",
+  proofNote: "Marketing performance backed by measurable results.",
+  servicesTitle: "What I Do",
+  servicesNote: "Digital strategies designed to help brands grow.",
+  workTitle: "Selected Work",
+  workNote: "Campaigns, projects and measurable outcomes.",
+  aboutTitle: "About Me",
+  aboutNote: "Helping brands gain visibility, connect with audiences and maximise profit.",
+  contactTitle: "Let's Grow Your Brand",
+  contactNote: "Ready to turn attention into measurable growth? Let's talk.",
+
+  email: "Praizzemanndigitals@gmail.com",
+  phone: "+2348102692209",
+  linkedin: "https://linkedin.com/in/praizikechukwu",
+  instagram: "https://instagram.com/iam_Praizzemann",
+
+  services: [
+    {title:"Digital Growth",description:"Digital marketing strategies that help brands increase visibility and grow.",tags:["Strategy","Growth"]},
+    {title:"SEO & Visibility",description:"Improve search visibility and help the right audience discover your brand.",tags:["SEO","Search"]},
+    {title:"Paid Ads",description:"Campaign management across Google Ads, Meta Ads and TikTok Ads.",tags:["Google Ads","Meta Ads","TikTok Ads"]},
+    {title:"Email Marketing",description:"Email strategy, campaigns and automation that support customer relationships.",tags:["Strategy","Campaigns","Automation"]},
+    {title:"Marketing Automation",description:"Smarter marketing workflows that save time and improve efficiency.",tags:["Automation","Workflows"]},
+    {title:"Content & Social Growth",description:"Content and social media strategies that build audience engagement.",tags:["Content","Social Media"]}
+  ],
+
+  metrics: [
+    {value:"40%",label:"Increase in client engagement"},
+    {value:"25%",label:"Improvement in conversions"},
+    {value:"56.9K",label:"Paid campaign reach"},
+    {value:"41",label:"Messaging conversations"},
+    {value:"#5",label:"SEO keyword position"}
+  ],
+
+  work: [
+    {label:"01 / SEO",title:"Search Engine Visibility",description:"SEO work achieving strong keyword positions in search results.",results:[{value:"#5",label:"Keyword position"},{value:"#7",label:"Keyword position"},{value:"#8",label:"Keyword position"}]},
+    {label:"02 / SOCIAL",title:"Social Media Growth",description:"Social media performance delivering views, interactions and audience growth.",results:[{value:"77,275",label:"Views"},{value:"4,800",label:"Interactions"},{value:"12,670",label:"Followers"}]},
+    {label:"03 / PAID MEDIA",title:"Paid Advertising Campaign",description:"Paid advertising campaign generating reach, impressions and messaging conversations.",results:[{value:"3,364",label:"Reach"},{value:"41",label:"Messaging conversations"},{value:"4,363",label:"Impressions"}]},
+    {label:"04 / AWARENESS",title:"Brand Awareness Campaign",description:"Awareness campaign reaching audiences through paid media.",results:[{value:"56.9K",label:"Reach"},{value:"₦4,597.30",label:"Ad spend"},{value:"₦80.75",label:"Cost per 1K reached"}]}
+  ],
+
+  experience: [
+    {date:"Jan 2023 – Present",title:"Media Manager · Sam and Cham Digitals",description:""},
+    {date:"May 2021 – Dec 2022",title:"Digital Marketing Head · Faida Tech Hub",description:""},
+    {date:"Sep 2019 – Apr 2021",title:"Email Marketing Specialist · Ibridsolutions",description:""},
+    {date:"Mar 2018 – Aug 2019",title:"Social Media Specialist · Accessgate",description:""}
+  ],
+
+  testimonials: []
+};
+
+siteData = {...defaults, ...(result.data||{})};
+siteImages = result.images||{};
 
 fillFields([...basic,...sections,...contacts]);
 
