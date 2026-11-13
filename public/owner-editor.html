@@ -4,142 +4,301 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Praizzemann Digitals — Owner Editor</title>
+<title>Praizzemann Digitals — Owner Dashboard</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;padding:20px;background:#080808;color:#f5f5f5;font-family:Arial,sans-serif}
-main{max-width:750px;margin:auto}
-h1{color:#b8ff24}
-.card{background:#151515;border:1px solid #333;border-radius:14px;padding:18px;margin:18px 0}
-label{display:block;margin:12px 0 6px;color:#ccc}
-input,textarea{width:100%;padding:12px;border-radius:8px;border:1px solid #555;background:#090909;color:white;font:inherit}
-textarea{min-height:110px}
-button{padding:12px 17px;border:0;border-radius:8px;background:#b8ff24;color:#080808;font-weight:bold;margin:8px 5px 5px 0}
-button.delete{background:#733333;color:white}
-.status{color:#b8ff24;white-space:pre-wrap}
-small{color:#aaa}
+body{margin:0;background:#080d0b;color:#f4fff7;font-family:Arial,sans-serif;padding:20px}
+main{max-width:850px;margin:auto}
+h1{color:#8dffad}
+h2{color:#8dffad;margin-top:30px}
+p{color:#b8c9bd;line-height:1.5}
+.panel{background:#111b15;border:1px solid #263c2d;border-radius:14px;padding:17px;margin:15px 0}
+label{display:block;font-size:14px;color:#c8d9cc;margin:13px 0 6px}
+input,textarea{width:100%;padding:12px;border-radius:8px;border:1px solid #405b47;background:#09110c;color:white;font:inherit}
+textarea{min-height:75px;resize:vertical}
+button{background:#8dffad;color:#07120a;border:0;border-radius:8px;padding:12px 17px;font-weight:bold;margin:8px 5px 8px 0}
+button.remove{background:#542b2b;color:white}
+button.secondary{background:#263c2d;color:white}
+.item{border:1px solid #405b47;padding:13px;border-radius:10px;margin:12px 0}
+small{color:#9cb2a2}
+#status{padding:12px;border-radius:8px;background:#17271b;margin-top:12px}
 </style>
 </head>
 <body>
 <main>
-<h1>PRAIZZEMANN DIGITALS</h1>
-<h2>Private Owner Editor</h2>
-<p>Edit and publish your genuine client testimonials.</p>
+<h1>Praizzemann Digitals</h1>
+<h2>Owner Dashboard</h2>
+<p>Edit your website here. Load your published content first, make your changes, then publish them to your live website.</p>
 
-<div class="card">
-<label>Private publishing token</label>
-<input id="token" type="password" placeholder="Enter your PUBLISH_TOKEN">
-<button id="load">Load published content</button>
-<p class="status" id="status">Enter your publishing token to begin.</p>
+<div class="panel">
+<h2>Connection</h2>
+<label>Publishing password (PUBLISH_TOKEN)</label>
+<input id="token" type="password" placeholder="Enter your Cloudflare publishing token">
+<button onclick="loadSite()">Load website content</button>
+<button onclick="saveSite()">Publish changes</button>
+<p><small>Your password is not saved by this page. Never share it with anyone.</small></p>
+<div id="status">Not connected yet.</div>
 </div>
 
-<div class="card">
-<h2>Testimonials</h2>
-<div id="items"></div>
-<button id="add">+ Add testimonial</button>
-<button id="save">Publish changes</button>
-<p class="status" id="result"></p>
+<div class="panel">
+<h2>Brand and Homepage</h2>
+<div id="basicFields"></div>
 </div>
+
+<div class="panel">
+<h2>Section Headings and Descriptions</h2>
+<div id="sectionFields"></div>
+</div>
+
+<div class="panel">
+<h2>Contact Details</h2>
+<div id="contactFields"></div>
+</div>
+
+<div class="panel">
+<h2>Services</h2>
+<p>Edit the services you offer. Add or remove items as needed.</p>
+<div id="services"></div>
+<button onclick="addItem('services')">+ Add service</button>
+</div>
+
+<div class="panel">
+<h2>Performance Metrics</h2>
+<p>Edit the numbers and results displayed on your website.</p>
+<div id="metrics"></div>
+<button onclick="addItem('metrics')">+ Add metric</button>
+</div>
+
+<div class="panel">
+<h2>Portfolio Projects</h2>
+<p>Edit your case studies and their results. For images, paste a public image URL.</p>
+<div id="work"></div>
+<button onclick="addItem('work')">+ Add project</button>
+</div>
+
+<div class="panel">
+<h2>Work Experience</h2>
+<div id="experience"></div>
+<button onclick="addItem('experience')">+ Add experience</button>
+</div>
+
+<div class="panel">
+<h2>Client Testimonials</h2>
+<p>Only publish genuine client feedback that you have permission to share.</p>
+<div id="testimonials"></div>
+<button onclick="addItem('testimonials')">+ Add testimonial</button>
+</div>
+
 </main>
 
 <script>
-let siteData = {};
-let siteImages = {};
-const items = document.getElementById('items');
-const statusBox = document.getElementById('status');
-const resultBox = document.getElementById('result');
+const API='/api/site';
+let siteData={};
+let siteImages={};
 
-function makeField(label, value, placeholder, multiline) {
-  const wrap = document.createElement('div');
-  const title = document.createElement('label');
-  title.textContent = label;
-  const field = document.createElement(multiline ? 'textarea' : 'input');
-  field.value = value || '';
-  field.placeholder = placeholder || '';
-  wrap.append(title, field);
-  return {wrap, field};
-}
+const basic=[
+['brand','Brand name'],
+['heroKicker','Homepage small heading'],
+['heroTitle','Homepage main headline'],
+['heroBio','Homepage introduction']
+];
 
-function addTestimonial(item = {}) {
-  const card = document.createElement('div');
-  card.className = 'card';
+const sections=[
+['proofTitle','Results section heading'],
+['proofNote','Results section description'],
+['servicesTitle','Services section heading'],
+['servicesNote','Services section description'],
+['workTitle','Portfolio section heading'],
+['workNote','Portfolio section description'],
+['aboutTitle','About section heading'],
+['aboutNote','About section description'],
+['contactTitle','Contact section heading'],
+['contactNote','Contact section description']
+];
 
-  const name = makeField('Client name · Company / role', item.name, 'Client name · Company', false);
-  const quote = makeField('Testimonial', item.quote, 'Enter the genuine client feedback', true);
+const contacts=[
+['email','Email address'],
+['phone','Phone / WhatsApp number'],
+['linkedin','LinkedIn profile URL'],
+['instagram','Instagram profile URL']
+];
 
-  const remove = document.createElement('button');
-  remove.className = 'delete';
-  remove.textContent = 'Delete testimonial';
-  remove.onclick = () => card.remove();
-
-  card.append(name.wrap, quote.wrap, remove);
-  card.dataset.testimonial = 'true';
-  items.append(card);
-}
-
-document.getElementById('load').onclick = async () => {
-  const token = document.getElementById('token').value.trim();
-  if (!token) {
-    statusBox.textContent = 'Please enter your publishing token.';
-    return;
-  }
-  statusBox.textContent = 'Loading...';
-  try {
-    const response = await fetch('/api/site');
-    if (!response.ok) throw new Error('Could not load website data.');
-    const result = await response.json();
-    siteData = result.data || {};
-    siteImages = result.images || {};
-    items.innerHTML = '';
-    (siteData.testimonials || []).forEach(addTestimonial);
-    statusBox.textContent = 'Published content loaded successfully.';
-  } catch (error) {
-    statusBox.textContent = error.message;
-  }
+const schemas={
+services:[
+['title','Service name'],
+['description','Description'],
+['tags','Tags (separate with commas)']
+],
+metrics:[
+['value','Result / number'],
+['label','Description']
+],
+work:[
+['label','Project number / label'],
+['title','Project title'],
+['description','Project description'],
+['results','Results (one per line: number | description)'],
+['image','Image URL']
+],
+experience:[
+['date','Date / period'],
+['title','Job title and company'],
+['description','Description']
+],
+testimonials:[
+['name','Client name · Company or role'],
+['quote','Client testimonial']
+]
 };
 
-document.getElementById('add').onclick = () => addTestimonial();
+function makeFields(container,fields){
+document.getElementById(container).innerHTML=fields.map(([key,label])=>`
+<label>${label}</label>
+<textarea id="field_${key}" rows="2"></textarea>
+`).join('');
+}
 
-document.getElementById('save').onclick = async () => {
-  const token = document.getElementById('token').value.trim();
-  if (!token) {
-    resultBox.textContent = 'Enter your publishing token first.';
-    return;
-  }
+makeFields('basicFields',basic);
+makeFields('sectionFields',sections);
+makeFields('contactFields',contacts);
 
-  const testimonials = [...items.querySelectorAll('[data-testimonial]')].map(card => {
-    const fields = card.querySelectorAll('input,textarea');
-    return {
-      name: fields[0].value.trim(),
-      quote: fields[1].value.trim()
-    };
-  }).filter(x => x.name && x.quote);
+function esc(value){
+return String(value||'').replace(/[&<>"']/g,c=>({
+'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+}[c]));
+}
 
-  if (testimonials.length === 0) {
-    resultBox.textContent = 'Add at least one genuine testimonial before publishing.';
-    return;
-  }
+function renderItems(type,items){
+const container=document.getElementById(type);
+container.innerHTML='';
+(items||[]).forEach((item,index)=>{
+const card=document.createElement('div');
+card.className='item';
+card.innerHTML=`<strong>${type.slice(0,-1)} ${index+1}</strong>
+${schemas[type].map(([key,label])=>`
+<label>${label}</label>
+<textarea data-key="${key}" rows="${key==='description'||key==='quote'||key==='results'?3:1}">${esc(
+key==='tags' && Array.isArray(item[key]) ? item[key].join(', ') :
+key==='results' && Array.isArray(item[key]) ? item[key].map(r=>(r.value||'')+' | '+(r.label||'')).join('\n') :
+item[key]
+)}</textarea>
+`).join('')}
+${type==='work'?`
+<label>Project image URL</label>
+<input data-key="image" value="${esc(siteImages['work'+index]||item.image||'')}">
+`:''}
+<button class="remove" onclick="removeItem('${type}',${index})">Remove</button>`;
+container.appendChild(card);
+});
+}
 
-  siteData.testimonials = testimonials;
-  resultBox.textContent = 'Publishing...';
+function addItem(type){
+const current=collectItems(type);
+current.push({});
+renderItems(type,current);
+}
 
-  try {
-    const response = await fetch('/api/site', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-      },
-      body: JSON.stringify({data: siteData, images: siteImages})
-    });
+function removeItem(type,index){
+const current=collectItems(type);
+current.splice(index,1);
+renderItems(type,current);
+}
 
-    const result = await response.json();
-    if (!response.ok) throw new Error(result.error || 'Publishing failed.');
-    resultBox.textContent = 'Published successfully! Refresh your public portfolio to check.';
-  } catch (error) {
-    resultBox.textContent = error.message;
-  }
-};
+function collectItems(type){
+return [...document.querySelectorAll('#'+type+' .item')].map(card=>{
+const item={};
+card.querySelectorAll('[data-key]').forEach(field=>{
+const key=field.dataset.key;
+let value=field.value.trim();
+if(key==='tags') value=value.split(',').map(x=>x.trim()).filter(Boolean);
+if(key==='results') value=value.split('\n').map(line=>{
+const parts=line.split('|');
+return {value:(parts[0]||'').trim(),label:(parts.slice(1).join('|')||'').trim()};
+}).filter(x=>x.value||x.label);
+item[key]=value;
+});
+return item;
+});
+}
+
+function fillFields(fields){
+fields.forEach(([key])=>{
+const el=document.getElementById('field_'+key);
+if(el) el.value=siteData[key]||'';
+});
+}
+
+function collectFields(fields){
+fields.forEach(([key])=>{
+const el=document.getElementById('field_'+key);
+if(el) siteData[key]=el.value.trim();
+});
+}
+
+function setStatus(message){
+document.getElementById('status').textContent=message;
+}
+
+async function loadSite(){
+setStatus('Loading your published website content...');
+try{
+const response=await fetch(API,{cache:'no-store'});
+if(!response.ok) throw new Error('Could not load website content.');
+const result=await response.json();
+siteData=result.data||{};
+siteImages=result.images||{};
+
+fillFields([...basic,...sections,...contacts]);
+
+Object.keys(schemas).forEach(type=>{
+renderItems(type,Array.isArray(siteData[type])?siteData[type]:[]);
+});
+
+setStatus('Website content loaded. You can now edit it.');
+}catch(error){
+setStatus('Loading failed: '+error.message);
+}
+}
+
+async function saveSite(){
+const token=document.getElementById('token').value.trim();
+if(!token){
+setStatus('Please enter your publishing password first.');
+return;
+}
+
+collectFields([...basic,...sections,...contacts]);
+
+Object.keys(schemas).forEach(type=>{
+siteData[type]=collectItems(type);
+});
+
+siteImages={};
+document.querySelectorAll('#work .item').forEach((card,index)=>{
+const image=card.querySelector('[data-key="image"]');
+if(image&&image.value.trim()) siteImages['work'+index]=image.value.trim();
+});
+
+setStatus('Publishing your changes...');
+
+try{
+const response=await fetch(API,{
+method:'PUT',
+headers:{
+'Content-Type':'application/json',
+'Authorization':'Bearer '+token
+},
+body:JSON.stringify({data:siteData,images:siteImages})
+});
+
+const result=await response.json();
+if(!response.ok) throw new Error(result.error||'Publishing failed.');
+
+setStatus('Success! Your changes have been published. Open your live website to check them.');
+}catch(error){
+setStatus('Publishing failed: '+error.message);
+}
+}
 </script>
 </body>
 </html>
