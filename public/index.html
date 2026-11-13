@@ -630,12 +630,23 @@ footer{
 </script>
 
 <script>
-(function(){
+(async function(){
   const KEY='praizzemann_portfolio_content_v1';
   const IMGKEY='praizzemann_portfolio_images_v1';
   const getData=()=>{try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){return {}}};
   const getImgs=()=>{try{return JSON.parse(localStorage.getItem(IMGKEY)||'{}')}catch(e){return {}}};
-  const d=getData(), imgs=getImgs();
+  let d=getData(), imgs=getImgs();
+
+try {
+  const response = await fetch('/api/site');
+  if (response.ok) {
+    const published = await response.json();
+    d = {...d, ...(published.data || {})};
+    imgs = {...imgs, ...(published.images || {})};
+  }
+} catch (error) {
+  console.error('Could not load published content:', error);
+}
 
   function setText(sel, val){
     if(val!==undefined && val!==null){
